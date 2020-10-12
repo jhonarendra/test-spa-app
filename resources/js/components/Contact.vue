@@ -4,8 +4,32 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    KONTAK
-                    <hr>
+                    <router-link :to="{ name: 'contact-add' }" class="btn btn-primary"> Tambah Data</router-link>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Body</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(article, index) in articles" :key="article.id">
+                                <th scope="row">{{ index + 1 }}</th>
+                                <td>{{ article.title }}</td>
+                                <td>{{ article.content }}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <button class="btn btn-info"> Edit </button>
+                                        <button class="btn btn-danger"> Delete </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -15,6 +39,22 @@
 
 <script>
 export default {
+    data() {
+        return {
+            articles: []
+        }
+    },
+    created() {
+        let uri = 'http://127.0.0.1:8000/api/articles';
+        axios.get(uri)
+            .then((response) => {
+                console.log("isi appa ", response.data.data);
+                this.articles = response.data.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
 }
 </script>
