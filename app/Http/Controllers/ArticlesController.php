@@ -19,4 +19,31 @@ class ArticlesController extends Controller
         ],200);
     }
 
+    public function post(Request $request)
+    {
+        $post = new Article();
+        $post->title = $request['title'];
+        $post->content  = $request['content'];
+        $post->save();
+
+        $message = [
+            'message' => 'Sukses input data'
+        ];
+
+        return response($message,200);
+
+    }
+
+    public function delete($id)
+    {
+        $delete = Article::find($id);
+        $delete->delete();
+        
+        $message = [
+            'message' => 'Field sudah terhapus'
+        ];
+
+        return response($message);
+    }
+
 }

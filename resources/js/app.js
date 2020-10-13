@@ -8,18 +8,18 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+// import depencies tambahan
 import VueRouter from 'vue-router'
-// Vue.use(VueRouter)
-
 import routes from './router'
 import VueAxios from 'vue-axios';
 import Axios from 'axios';
-// import VueAxios from 'vue-axios';
-// import axios from 'axios';
-// Vue.use(VueAxios, axios);
+
 Vue.use(VueRouter, VueAxios, Axios);
+
 Vue.component('navigation', require('./components/Navigation').default);
+
 const app = new Vue({
     el: '#app',
+    // inisialisasi route
     router: new VueRouter(routes),
 });

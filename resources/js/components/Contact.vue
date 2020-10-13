@@ -24,7 +24,7 @@
                                 <td>
                                     <div class="form-group">
                                         <button class="btn btn-info"> Edit </button>
-                                        <button class="btn btn-danger"> Delete </button>
+                                        <button class="btn btn-danger" v-on:click="deleteData(article.id)"> Delete </button>
                                     </div>
                                 </td>
                             </tr>
@@ -45,15 +45,26 @@ export default {
         }
     },
     created() {
-        let uri = 'http://127.0.0.1:8000/api/articles';
-        axios.get(uri)
-            .then((response) => {
-                console.log("isi appa ", response.data.data);
-                this.articles = response.data.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        this.loadData();
+    },
+    methods: {
+        loadData() {
+            let uri = 'http://127.0.0.1:8000/api/articles';
+            axios.get(uri)
+                .then((response) => {
+                    this.articles = response.data.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        deleteData(id) {
+            let uri = 'http://127.0.0.1:8000/api/articles/delete/' + id;
+            axios.delete(uri)
+                .then(response => {
+                    this.loadData();
+                })
+        }
     }
 
 }
