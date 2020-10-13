@@ -46,4 +46,30 @@ class ArticlesController extends Controller
         return response($message);
     }
 
+    public function edit(Request $request,$id)
+    {
+        $edit = Article::find($id);
+        $edit->title = $request['title'];
+        $edit->content = $request['content'];
+        $edit->save();
+
+        $message = [
+            'message' => 'update sukses',
+            'data'    => $edit
+        ];
+
+        return response($message);
+    }
+
+    public function showDetail($id)
+    {
+        $detail = Article::find($id);
+
+        
+        return response([
+            'success' => true,
+            'data'    => $detail
+        ]);
+    }
+
 }

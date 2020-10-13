@@ -23,7 +23,7 @@
                                 <td>{{ article.content }}</td>
                                 <td>
                                     <div class="form-group">
-                                        <button class="btn btn-info"> Edit </button>
+                                        <router-link :to="'contact/edit/'+article.id" class="btn btn-primary"> Edit</router-link>
                                         <button class="btn btn-danger" v-on:click="deleteData(article.id)"> Delete </button>
                                     </div>
                                 </td>

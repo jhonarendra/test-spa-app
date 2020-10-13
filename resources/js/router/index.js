@@ -2,6 +2,7 @@ import Home from '../components/Home.vue'
 import About from '../components/About.vue'
 import Contact from '../components/Contact.vue'
 import ContactAdd from '../components/ContactCreate.vue'
+import ContactEdit from '../components/ContactEdit.vue'
 
 export default {
     mode: 'history',
@@ -25,6 +26,11 @@ export default {
             path: '/contact/add',
             name: 'contact-add',
             component: ContactAdd
+        },
+        {
+            path: '/contact/edit/:id',
+            name: 'contact-update',
+            component: ContactEdit
         }
 
     ]
