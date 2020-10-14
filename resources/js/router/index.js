@@ -3,6 +3,7 @@ import About from '../components/About.vue'
 import Contact from '../components/Contact.vue'
 import ContactAdd from '../components/ContactCreate.vue'
 import ContactEdit from '../components/ContactEdit.vue'
+import Bulletin from '../components/Bulletin.vue'
 
 export default {
     mode: 'history',
@@ -31,7 +32,13 @@ export default {
             path: '/contact/edit/:id',
             name: 'contact-update',
             component: ContactEdit
+        },
+        {
+            path: '/bulletin',
+            name: 'bulletin',
+            component: Bulletin
         }
+
 
     ]
 }

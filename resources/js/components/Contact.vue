@@ -10,10 +10,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Body</th>
-                                <th scope="col">Action</th>
+                                <th scope="col" style="width:10%">No</th>
+                                <th scope="col" style="width:20%">Title</th>
+                                <th scope="col" style="width:40%">Body</th>
+                                <th scope="col" style="width:30%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,6 +64,9 @@ export default {
                 .then(response => {
                     this.loadData();
                 })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
     }
 

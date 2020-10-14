@@ -23,3 +23,6 @@ Route::post('/articles/post','ArticlesController@post');
 Route::delete('/articles/delete/{id}','ArticlesController@delete');
 Route::put('articles/update/{id}','ArticlesController@edit');
 Route::get('articles/detail/{id}','ArticlesController@showDetail');
+
+Route::get('/bulletin','BulletinController@index');
+Route::post('/bulletin/post','BulletinController@post');

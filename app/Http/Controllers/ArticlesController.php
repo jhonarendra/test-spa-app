@@ -10,7 +10,7 @@ class ArticlesController extends Controller
 {
     public function index()
     {
-        $posts = Article::get();
+        $posts = Article::latest()->get();
 
         return response([
             'success' => true,
@@ -65,7 +65,7 @@ class ArticlesController extends Controller
     {
         $detail = Article::find($id);
 
-        
+
         return response([
             'success' => true,
             'data'    => $detail
