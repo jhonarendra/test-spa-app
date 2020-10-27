@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bulletin extends Model
 {
-    //
+    protected $table = "bulletins";
+
+    protected $fillable = ['title','content'];
 }

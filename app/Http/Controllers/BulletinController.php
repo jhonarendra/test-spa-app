@@ -1,37 +1,39 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Bulletin;
-
-
 use Illuminate\Http\Request;
 
 class BulletinController extends Controller
 {
     public function index()
     {
-        $posts = Bulletin::latest()->get();
+        $bulletin = Bulletin::latest()->get();
 
         return response([
             'success' => true,
-            'message' => 'List semua Post',
-            'data'    => $posts
+            'message' => 'List semua bulletin',
+            'data'    => $bulletin
         ],200);
     }
     
     public function post(Request $request)
     {
-        $post = new Bulletin();
-        $post->title = $request['title'];
-        $post->content  = $request['content'];
-        $post->save();
 
-        $message = [
-            'message' => 'Sukses input data'
-        ];
+        $validatedData = $request->validate([
+            'title' => 'required|unique:bulletins|max:255',
+            'content' => 'required',
+        ]);
 
-        return response($message,200);
+        $bulletin = new Bulletin();
+        $bulletin->title = $request['title'];
+        $bulletin->content  = $request['content'];
+        $bulletin->save();
+
+        return response()->json([
+            'status' => true,
+            'msg' => 'Sukses input data'
+        ]);
 
     }
 }

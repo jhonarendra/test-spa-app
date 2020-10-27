@@ -9,11 +9,11 @@
                             <form @submit.prevent="addData()">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Title</label>
-                                    <input type="text" v-model="form.title" name="title" class="form-control" placeholder="Enter title">
+                                    <input type="text" v-model="form.title" :class="{'is-invalid' : invalid_form.title}" name="title" class="form-control" placeholder="Enter title">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Body :</label>
-                                    <textarea class="form-control" v-model="form.content" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <textarea class="form-control" :class="{'is-invalid' : invalid_form.content}" v-model="form.content" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -57,7 +57,10 @@ export default {
                 title: '',
                 content: ''
             },
-
+            invalid_form: {
+                title: false,
+                content: false
+            },
             title: '',
             content: ''
         }
@@ -67,7 +70,7 @@ export default {
     },
     methods: {
         loadData() {
-            let uri = 'http://127.0.0.1:8000/api/bulletin';
+            let uri = '/api/bulletin';
             axios.get(uri)
                 .then((response) => {
                     this.articles = response.data.data;
@@ -78,14 +81,30 @@ export default {
         },
 
         addData() {
-            let uri = 'http://127.0.0.1:8000/api/bulletin/post';
+            let uri = '/api/bulletin/post';
+
             axios
                 .post(uri, {
                     title: this.form.title,
                     content: this.form.content
                 })
                 .then(response => {
-                    this.resetForm();
+                    if(response.data.status){
+                        this.invalid_form.title = false
+                        this.invalid_form.content = false
+                        this.resetForm();
+                    }
+                    
+                }).catch(error => {
+                    console.log(error.response.data.errors)
+                    if(error.response.data.errors.hasOwnProperty('content')){
+                        this.invalid_form.content = true
+                    }
+                    if(error.response.data.errors.hasOwnProperty('title')){
+                        this.invalid_form.title = true
+                    }
+                    alert(error.response.data.message)
+                    
                 });
         },
         resetForm() {

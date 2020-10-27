@@ -1994,6 +1994,10 @@ __webpack_require__.r(__webpack_exports__);
         title: '',
         content: ''
       },
+      invalid_form: {
+        title: false,
+        content: false
+      },
       title: '',
       content: ''
     };
@@ -2005,7 +2009,7 @@ __webpack_require__.r(__webpack_exports__);
     loadData: function loadData() {
       var _this = this;
 
-      var uri = 'http://127.0.0.1:8000/api/bulletin';
+      var uri = '/api/bulletin';
       axios.get(uri).then(function (response) {
         _this.articles = response.data.data;
       })["catch"](function (error) {
@@ -2015,12 +2019,29 @@ __webpack_require__.r(__webpack_exports__);
     addData: function addData() {
       var _this2 = this;
 
-      var uri = 'http://127.0.0.1:8000/api/bulletin/post';
+      var uri = '/api/bulletin/post';
       axios.post(uri, {
         title: this.form.title,
         content: this.form.content
       }).then(function (response) {
-        _this2.resetForm();
+        if (response.data.status) {
+          _this2.invalid_form.title = false;
+          _this2.invalid_form.content = false;
+
+          _this2.resetForm();
+        }
+      })["catch"](function (error) {
+        console.log(error.response.data.errors);
+
+        if (error.response.data.errors.hasOwnProperty('content')) {
+          _this2.invalid_form.content = true;
+        }
+
+        if (error.response.data.errors.hasOwnProperty('title')) {
+          _this2.invalid_form.title = true;
+        }
+
+        alert(error.response.data.message);
       });
     },
     resetForm: function resetForm() {
@@ -37986,6 +38007,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          class: { "is-invalid": _vm.invalid_form.title },
                           attrs: {
                             type: "text",
                             name: "title",
@@ -38020,6 +38042,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          class: { "is-invalid": _vm.invalid_form.content },
                           attrs: {
                             name: "content",
                             id: "exampleFormControlTextarea1",
@@ -54519,8 +54542,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Belajar-Laravel-001\003LaravelVueCrud\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Belajar-Laravel-001\003LaravelVueCrud\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\htdocs\test-spa-app\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\htdocs\test-spa-app\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
